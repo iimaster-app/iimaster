@@ -15,8 +15,10 @@ echo '=== 4/5 Скачиваю и распаковываю приложение'
 rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
-curl -fsSL -o app.zip https://iimaster-app.github.io/iimaster/deploy/ii-master-cloud.zip
+# ?v= — защита от кэша: без него GitHub может отдать старую копию архива
+curl -fsSL -o app.zip "https://iimaster-app.github.io/iimaster/deploy/ii-master-cloud.zip?v=0.9.1"
 unzip -oq app.zip
+grep -q 'api/backup/with-account' tools/cloud/server.js || { echo 'ОШИБКА: в архиве старый код сервера — сообщите помощнику'; exit 1; }
 ls tools/cloud/server.js >/dev/null || { echo 'ОШИБКА: в архиве нет tools/cloud/server.js — сообщите помощнику'; exit 1; }
 echo '=== 5/5 Автозапуск службы и HTTPS'
 printf '%s\n' 'app.ii-master.ru {' '  reverse_proxy 127.0.0.1:8790' '}' > /etc/caddy/Caddyfile
