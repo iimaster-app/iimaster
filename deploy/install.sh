@@ -28,6 +28,10 @@ sleep 3
 echo '=== Проверка:'
 curl -s http://127.0.0.1:8790/api/health || { echo 'Сервер не ответил. Подробности: journalctl -u ii-master -n 20'; exit 1; }
 echo ''
+echo '=== Проверка новых возможностей (ожидаем 401 у адреса копий и 200 у health):'
+curl -s -o /dev/null -w '  адрес копий для владельца: %{http_code}  (401 - всё в порядке, 404 - код ещё старый)\n' \
+  -X POST -H 'Content-Type: application/json' -d '{}' http://127.0.0.1:8790/api/backup/with-account
+echo ''
 echo '=== Дневной лимит трат на человека: по умолчанию 100 ₽.'
 echo '=== Изменить: echo "CLOUD_LIMIT_RUB=300" > /opt/ii-master/limit.env && systemctl restart ii-master'
 echo '=== Если выше было {"ok":true,...} — установка прошла успешно.'
