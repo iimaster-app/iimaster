@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 # РЈСЃС‚Р°РЅРѕРІРєР° РѕР±Р»Р°С‡РЅРѕРіРѕ СЃРµСЂРІРµСЂР° В«РР РњР°СЃС‚РµСЂВ» (РїРёР»РѕС‚). Ubuntu 24.04, Р·Р°РїСѓСЃРє РѕС‚ root.
 # РљРѕСЂРѕС‚РєР°СЏ РєРѕРјР°РЅРґР° РґР»СЏ РІРµР±-РєРѕРЅСЃРѕР»Рё (РјРѕР¶РЅРѕ Р·Р°РїСѓСЃРєР°С‚СЊ РїРѕРІС‚РѕСЂРЅРѕ вЂ” РѕРЅР° СЃР°РјР° РІСЃС‘ РїРѕС‡РёРЅРёС‚):
 #   curl -fsSL https://iimaster-app.github.io/iimaster/deploy/install.sh | bash
@@ -12,13 +12,14 @@ echo '=== 3/5 РЎС‚Р°РІР»СЋ Node 22 (РЅСѓР¶РµРЅ РґР»С
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs
 echo '=== 4/5 РЎРєР°С‡РёРІР°СЋ Рё СЂР°СЃРїР°РєРѕРІС‹РІР°СЋ РїСЂРёР»РѕР¶РµРЅРёРµ'
+curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v12.zip"
 rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
 # ?v= вЂ” Р·Р°С‰РёС‚Р° РѕС‚ РєСЌС€Р°: Р±РµР· РЅРµРіРѕ GitHub РјРѕР¶РµС‚ РѕС‚РґР°С‚СЊ СЃС‚Р°СЂСѓСЋ РєРѕРїРёСЋ Р°СЂС…РёРІР°
 # Файл берём напрямую из репозитория: папка deploy на GitHub Pages отдаёт 404
 # (большие zip не проходят сборку страниц), а прямая ссылка работает всегда.
-curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v9.zip"
+
 unzip -oq app.zip
 grep -q 'api/backup/with-account' tools/cloud/server.js || { echo 'РћРЁРР‘РљРђ: РІ Р°СЂС…РёРІРµ СЃС‚Р°СЂС‹Р№ РєРѕРґ СЃРµСЂРІРµСЂР° вЂ” СЃРѕРѕР±С‰РёС‚Рµ РїРѕРјРѕС‰РЅРёРєСѓ'; exit 1; }
 ls tools/cloud/server.js >/dev/null || { echo 'РћРЁРР‘РљРђ: РІ Р°СЂС…РёРІРµ РЅРµС‚ tools/cloud/server.js вЂ” СЃРѕРѕР±С‰РёС‚Рµ РїРѕРјРѕС‰РЅРёРєСѓ'; exit 1; }
