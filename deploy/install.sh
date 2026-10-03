@@ -16,7 +16,9 @@ rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
 # ?v= вЂ” Р·Р°С‰РёС‚Р° РѕС‚ РєСЌС€Р°: Р±РµР· РЅРµРіРѕ GitHub РјРѕР¶РµС‚ РѕС‚РґР°С‚СЊ СЃС‚Р°СЂСѓСЋ РєРѕРїРёСЋ Р°СЂС…РёРІР°
-curl -fsSL -o app.zip "https://iimaster-app.github.io/iimaster/deploy/ii-master-cloud-v5.zip"
+# Файл берём напрямую из репозитория: папка deploy на GitHub Pages отдаёт 404
+# (большие zip не проходят сборку страниц), а прямая ссылка работает всегда.
+curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v5.zip"
 unzip -oq app.zip
 grep -q 'api/backup/with-account' tools/cloud/server.js || { echo 'РћРЁРР‘РљРђ: РІ Р°СЂС…РёРІРµ СЃС‚Р°СЂС‹Р№ РєРѕРґ СЃРµСЂРІРµСЂР° вЂ” СЃРѕРѕР±С‰РёС‚Рµ РїРѕРјРѕС‰РЅРёРєСѓ'; exit 1; }
 ls tools/cloud/server.js >/dev/null || { echo 'РћРЁРР‘РљРђ: РІ Р°СЂС…РёРІРµ РЅРµС‚ tools/cloud/server.js вЂ” СЃРѕРѕР±С‰РёС‚Рµ РїРѕРјРѕС‰РЅРёРєСѓ'; exit 1; }
