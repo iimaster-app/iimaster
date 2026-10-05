@@ -13,14 +13,17 @@ DIR=/opt/ii-master/app
 BASE=https://raw.githubusercontent.com/iimaster-app/iimaster/main
 
 cd "$DIR"
-echo 'Скачиваю значок сайта и файл подтверждения Яндекса...'
+echo 'Скачиваю значок сайта и файлы подтверждения Яндекса...'
 curl -fsSL -o favicon.ico "$BASE/favicon.ico"
-curl -fsSL -o yandex_f625d3331d59a3a2.html "$BASE/yandex_f625d3331d59a3a2.html"
+# основной код подтверждения (Яндекс.Вебмастер .ru)
+curl -fsSL -o yandex_3f67930bc96e723a.html "$BASE/yandex_3f67930bc96e723a.html"
+# старый код (казахское зеркало .kz) — оставляем на всякий случай, не критично
+curl -fsSL -o yandex_f625d3331d59a3a2.html "$BASE/yandex_f625d3331d59a3a2.html" || true
 
 echo ''
 echo 'Готово. Файлы на месте:'
-ls -l favicon.ico yandex_f625d3331d59a3a2.html
+ls -l favicon.ico yandex_3f67930bc96e723a.html yandex_f625d3331d59a3a2.html
 echo ''
 echo 'Проверьте в браузере:'
-echo '  https://ii-master.ru/yandex_f625d3331d59a3a2.html   (должно быть: Verification: f625d3331d59a3a2)'
+echo '  https://ii-master.ru/yandex_3f67930bc96e723a.html   (должно быть: Verification: 3f67930bc96e723a)'
 echo '  https://ii-master.ru/favicon.ico'
