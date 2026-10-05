@@ -49,17 +49,12 @@
   @media (max-width:860px){
     .only-desk{display:none}
     .only-mob{display:inline-flex}
-    /* телефон: блок текста поднят максимально близко к шапке; логотип перед кнопками, по центру */
-    header.top{padding:0}
-    .wrap{padding-top:0}
-    h1{margin:0 0 4px;line-height:1.05}
-    .lead{font-size:15.5px;line-height:1.55}
-    .hero{flex-direction:column;align-items:center;gap:6px;margin-top:0}
-    .hero .txt{display:contents}
-    .hero h1{order:1;width:100%;text-align:left}
-    .hero .lead{order:2;width:100%;text-align:left}
-    .hero img.robot{order:3;margin:0 auto;width:200px;height:200px}
-    .hero .btns{order:4;margin-top:0;justify-content:center;width:100%}
+    /* как на одобренном скрине: заголовок, текст, кнопки, затем робот */
+    header.top{padding-bottom:8px}
+    h1{margin-top:4px}
+    .lead{font-size:15.5px;line-height:1.6}
+    .btns{margin-top:16px}
+    .hero{gap:18px}
   }
   h1{font-size:clamp(30px,5.4vw,56px);line-height:1.06;letter-spacing:-.03em;margin:22px 0 16px;
     background:linear-gradient(120deg,#fff 10%,var(--magenta) 55%,var(--cyan));
