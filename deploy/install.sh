@@ -12,7 +12,7 @@ echo '=== 3/5 Р РЋРЎвЂљР В°Р Р†Р В»РЎР‹ Node 22 (Р 
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs
 echo '=== 4/5 Р РЋР С”Р В°РЎвЂЎР С‘Р Р†Р В°РЎР‹ Р С‘ РЎР‚Р В°РЎРѓР С—Р В°Р С”Р С•Р Р†РЎвЂ№Р Р†Р В°РЎР‹ Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘Р Вµ'
-curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v13.zip"
+curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v14.zip"
 rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
@@ -21,6 +21,9 @@ cd /opt/ii-master/app
 # (Р±РѕР»СЊС€РёРµ zip РЅРµ РїСЂРѕС…РѕРґСЏС‚ СЃР±РѕСЂРєСѓ СЃС‚СЂР°РЅРёС†), Р° РїСЂСЏРјР°СЏ СЃСЃС‹Р»РєР° СЂР°Р±РѕС‚Р°РµС‚ РІСЃРµРіРґР°.
 
 unzip -oq ../app.zip
+# site files for Yandex (favicon + verification) - keep them after every update
+curl -fsSL -o favicon.ico "https://raw.githubusercontent.com/iimaster-app/iimaster/main/favicon.ico" || true
+curl -fsSL -o yandex_3f67930bc96e723a.html "https://raw.githubusercontent.com/iimaster-app/iimaster/main/yandex_3f67930bc96e723a.html" || true
 grep -q 'api/backup/with-account' tools/cloud/server.js || { echo 'Р С›Р РЃР ВР вЂР С™Р С’: Р Р† Р В°РЎР‚РЎвЂ¦Р С‘Р Р†Р Вµ РЎРѓРЎвЂљР В°РЎР‚РЎвЂ№Р в„– Р С”Р С•Р Т‘ РЎРѓР ВµРЎР‚Р Р†Р ВµРЎР‚Р В° РІР‚вЂќ РЎРѓР С•Р С•Р В±РЎвЂ°Р С‘РЎвЂљР Вµ Р С—Р С•Р СР С•РЎвЂ°Р Р…Р С‘Р С”РЎС“'; exit 1; }
 ls tools/cloud/server.js >/dev/null || { echo 'Р С›Р РЃР ВР вЂР С™Р С’: Р Р† Р В°РЎР‚РЎвЂ¦Р С‘Р Р†Р Вµ Р Р…Р ВµРЎвЂљ tools/cloud/server.js РІР‚вЂќ РЎРѓР С•Р С•Р В±РЎвЂ°Р С‘РЎвЂљР Вµ Р С—Р С•Р СР С•РЎвЂ°Р Р…Р С‘Р С”РЎС“'; exit 1; }
 echo '    Р В°РЎР‚РЎвЂ¦Р С‘Р Р† РЎР‚Р В°РЎРѓР С—Р В°Р С”Р С•Р Р†Р В°Р Р…, Р С”Р С•Р Т‘ РЎРѓР ВµРЎР‚Р Р†Р ВµРЎР‚Р В° РІР‚вЂќ Р Р…Р С•Р Р†РЎвЂ№Р в„–'
