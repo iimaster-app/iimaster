@@ -43,6 +43,10 @@
   .btn.primary{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#0b0418;border:0;
     box-shadow:0 0 26px rgba(232,121,249,.5)}
   .btn.ghost{background:rgba(16,6,36,.6)}
+  .xbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;
+    border:1px solid var(--line-hi);color:#fff;font-size:20px;line-height:1;background:rgba(16,6,36,.6)}
+  .only-mob{display:none}
+  @media (max-width:860px){ .only-desk{display:none} .only-mob{display:inline-flex} }
   h1{font-size:clamp(30px,5.4vw,56px);line-height:1.06;letter-spacing:-.03em;margin:22px 0 16px;
     background:linear-gradient(120deg,#fff 10%,var(--magenta) 55%,var(--cyan));
     -webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -90,7 +94,8 @@
     <img src="assets/icons/pwa-icon.png" alt="ИИ Мастер">
     <div><b>ИИ Мастер</b><span>личный ИИ-ассистент</span></div>
     <div class="grow"></div>
-    <a class="btn ghost" href="#download">Скачать приложение</a>
+    <a class="btn ghost only-desk" href="https://app.ii-master.ru/">Войти в облако</a>
+    <a class="xbtn only-mob" href="https://app.ii-master.ru/" title="В ИИ чат" aria-label="В ИИ чат">✕</a>
   </header>
 
   <div class="hero">
