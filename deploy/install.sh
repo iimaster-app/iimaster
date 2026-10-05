@@ -4,6 +4,7 @@
 #   curl -fsSL https://iimaster-app.github.io/iimaster/deploy/install.sh | bash
 # Р СџРЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘Р Вµ РЎРѓРЎвЂљР В°Р Р†Р С‘РЎвЂљРЎРѓРЎРЏ Р Р† /opt/ii-master/app, Р Т‘Р В°Р Р…Р Р…РЎвЂ№Р Вµ (Р В±Р В°Р В·Р В°) Р В¶Р С‘Р Р†РЎС“РЎвЂљ Р С•РЎвЂљР Т‘Р ВµР В»РЎРЉР Р…Р С• Р Р† /opt/ii-master/data.
 set -e
+cd /
 echo '=== 1/5 Р С›Р В±Р Р…Р С•Р Р†Р В»РЎРЏРЎР‹ РЎРѓР С—Р С‘РЎРѓР С”Р С‘ Р С—Р В°Р С”Р ВµРЎвЂљР С•Р Р†'
 apt-get update -qq
 echo '=== 2/5 Р РЋРЎвЂљР В°Р Р†Р В»РЎР‹ curl, unzip, Caddy'
