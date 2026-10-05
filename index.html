@@ -46,7 +46,19 @@
   .xbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;
     border:1px solid var(--line-hi);color:#fff;font-size:20px;line-height:1;background:rgba(16,6,36,.6)}
   .only-mob{display:none}
-  @media (max-width:860px){ .only-desk{display:none} .only-mob{display:inline-flex} }
+  @media (max-width:860px){
+    .only-desk{display:none}
+    .only-mob{display:inline-flex}
+    /* телефон: заголовок поднимаем на строку выше, логотип (робот) идёт ПЕРЕД кнопками,
+       отступы между блоками равные */
+    header.top{padding-bottom:10px}
+    .hero{flex-direction:column;align-items:stretch;gap:18px;margin-top:0}
+    .hero .txt{display:contents}
+    .hero h1{order:1;margin-top:6px}
+    .hero .lead{order:2}
+    .hero img.robot{order:3;margin:0 auto}
+    .hero .btns{order:4;margin-top:0;justify-content:center}
+  }
   h1{font-size:clamp(30px,5.4vw,56px);line-height:1.06;letter-spacing:-.03em;margin:22px 0 16px;
     background:linear-gradient(120deg,#fff 10%,var(--magenta) 55%,var(--cyan));
     -webkit-background-clip:text;-webkit-text-fill-color:transparent}
