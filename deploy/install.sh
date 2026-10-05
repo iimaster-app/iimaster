@@ -31,7 +31,7 @@ echo '    Р В°РЎР‚РЎвЂ¦Р С‘Р Р† РЎР‚Р В°РЎР�
 echo '=== 5/5 Р С’Р Р†РЎвЂљР С•Р В·Р В°Р С—РЎС“РЎРѓР С” РЎРѓР В»РЎС“Р В¶Р В±РЎвЂ№ Р С‘ HTTPS'
 printf '%s\n' 'app.ii-master.ru {' '  reverse_proxy 127.0.0.1:8790' '}' 'ii-master.ru {' '  reverse_proxy 127.0.0.1:8790' '}' 'www.ii-master.ru {' '  reverse_proxy 127.0.0.1:8790' '}' > /etc/caddy/Caddyfile
 systemctl restart caddy
-printf '%s\n' '[Unit]' 'Description=II Master cloud' 'After=network.target' '' '[Service]' 'WorkingDirectory=/opt/ii-master/app' 'Environment=CLOUD_PORT=8790' 'Environment=CLOUD_DATA=/opt/ii-master/data' 'ExecStart=/usr/bin/node --no-warnings tools/cloud/server.js' 'Restart=always' 'RestartSec=5' '' '[Install]' 'WantedBy=multi-user.target' > /etc/systemd/system/ii-master.service
+printf '%s\n' '[Unit]' 'Description=II Master cloud' 'After=network.target' '' '[Service]' 'WorkingDirectory=/opt/ii-master/app' 'Environment=CLOUD_PORT=8790' 'Environment=CLOUD_DATA=/opt/ii-master/data' 'EnvironmentFile=-/opt/ii-master/pay.env' 'ExecStart=/usr/bin/node --no-warnings tools/cloud/server.js' 'Restart=always' 'RestartSec=5' '' '[Install]' 'WantedBy=multi-user.target' > /etc/systemd/system/ii-master.service
 systemctl daemon-reload
 systemctl enable ii-master
 # Р вЂ™Р С’Р вЂ“Р СњР С›: Р С‘Р СР ВµР Р…Р Р…Р С• restart, Р В° Р Р…Р Вµ Р’В«enable --nowР’В» РІР‚вЂќ Р Т‘Р В»РЎРЏ РЎС“Р В¶Р Вµ Р В·Р В°Р С—РЎС“РЎвЂ°Р ВµР Р…Р Р…Р С•Р в„– РЎРѓР В»РЎС“Р В¶Р В±РЎвЂ№ Р’В«--nowР’В» Р Р…Р С‘РЎвЂЎР ВµР С–Р С• Р Р…Р Вµ Р С—Р ВµРЎР‚Р ВµР В·Р В°Р С—РЎС“РЎРѓР С”Р В°Р ВµРЎвЂљ,
