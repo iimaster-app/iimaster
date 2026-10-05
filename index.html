@@ -49,15 +49,13 @@
   @media (max-width:860px){
     .only-desk{display:none}
     .only-mob{display:inline-flex}
-    /* телефон: заголовок поднимаем на строку выше, логотип (робот) идёт ПЕРЕД кнопками,
-       отступы между блоками равные */
-    header.top{padding-bottom:10px}
-    .hero{flex-direction:column;align-items:stretch;gap:18px;margin-top:0}
-    .hero .txt{display:contents}
-    .hero h1{order:1;margin-top:6px}
-    .hero .lead{order:2}
-    .hero img.robot{order:3;margin:0 auto}
-    .hero .btns{order:4;margin-top:0;justify-content:center}
+    /* телефон: поднимаем блок, чтобы кнопки «Скачать приложение» и «Как установить» помещались
+       в экран; порядок естественный - заголовок, текст, кнопки, затем робот */
+    header.top{padding-bottom:8px}
+    h1{margin-top:4px}
+    .lead{font-size:15.5px;line-height:1.6}
+    .btns{margin-top:16px}
+    .hero{gap:18px}
   }
   h1{font-size:clamp(30px,5.4vw,56px);line-height:1.06;letter-spacing:-.03em;margin:22px 0 16px;
     background:linear-gradient(120deg,#fff 10%,var(--magenta) 55%,var(--cyan));
@@ -106,8 +104,8 @@
     <img src="assets/icons/pwa-icon.png" alt="ИИ Мастер">
     <div><b>ИИ Мастер</b><span>личный ИИ-ассистент</span></div>
     <div class="grow"></div>
-    <a class="btn ghost only-desk" href="https://app.ii-master.ru/">Выйти</a>
-    <a class="xbtn only-mob" href="https://app.ii-master.ru/" title="В ИИ чат" aria-label="В ИИ чат">✕</a>
+    <a class="btn ghost only-desk" href="https://app.ii-master.ru/" target="_top" onclick="try{window.top.location.href='https://app.ii-master.ru/';return false;}catch(e){}">Выйти</a>
+    <a class="xbtn only-mob" href="https://app.ii-master.ru/" target="_top" onclick="try{window.top.location.href='https://app.ii-master.ru/';return false;}catch(e){}" title="В ИИ чат" aria-label="В ИИ чат">✕</a>
   </header>
 
   <div class="hero">
