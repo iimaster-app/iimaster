@@ -49,12 +49,13 @@
   @media (max-width:860px){
     .only-desk{display:none}
     .only-mob{display:inline-flex}
-    /* телефон: поднимаем блок на ~2 строки; логотип перед кнопками, оба по центру */
-    .wrap{padding-top:6px}
-    header.top{padding-bottom:6px}
-    h1{margin:2px 0 8px}
+    /* телефон: поднимаем весь блок как можно выше (без наезда на шапку);
+       логотип перед кнопками, оба по центру */
+    header.top{padding:6px 0 2px}
+    .wrap{padding-top:0}
+    h1{margin:0 0 6px}
     .lead{font-size:15.5px;line-height:1.6}
-    .hero{flex-direction:column;align-items:center;gap:10px;margin-top:0}
+    .hero{flex-direction:column;align-items:center;gap:8px;margin-top:0}
     .hero .txt{display:contents}
     .hero h1{order:1;width:100%;text-align:left}
     .hero .lead{order:2;width:100%;text-align:left}
