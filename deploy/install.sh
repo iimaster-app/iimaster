@@ -13,7 +13,7 @@ echo '=== 3/5 Р РЋРЎвЂљР В°Р Р†Р В»РЎР‹ Node 22 (Р 
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs
 echo '=== 4/5 Р РЋР С”Р В°РЎвЂЎР С‘Р Р†Р В°РЎР‹ Р С‘ РЎР‚Р В°РЎРѓР С—Р В°Р С”Р С•Р Р†РЎвЂ№Р Р†Р В°РЎР‹ Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘Р Вµ'
-curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v28.zip"
+curl -fsSL -o app.zip "https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v29.zip"
 rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
