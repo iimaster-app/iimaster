@@ -58,6 +58,11 @@
     .hero .txt{width:100%}
     .hero .btns{justify-content:center}
     .hero img.robot{margin:0 auto}
+    /* таблица пакетов на телефоне: числа не переносятся, строки ровные */
+    table{font-size:12.5px}
+    th,td{padding:9px 6px}
+    th{font-size:9.5px;letter-spacing:.06em}
+    td:nth-child(1),td:nth-child(2),td:nth-child(3){white-space:nowrap}
   }
   h1{font-size:clamp(30px,5.4vw,56px);line-height:1.06;letter-spacing:-.03em;margin:22px 0 16px;
     background:linear-gradient(120deg,#fff 10%,var(--magenta) 55%,var(--cyan));
@@ -178,12 +183,12 @@
     <p class="sub">Внутренняя валюта приложения. 1 000 000 Баксов начисляются сразу за регистрацию.</p>
     <table>
       <tr><th>Пакет</th><th>Цена</th><th>Баксов</th><th>За 1 млн</th></tr>
-      <tr><td>Бесплатный</td><td>0 ₽</td><td>1 000 000</td><td>бонус за согласие</td></tr>
-      <tr><td>Стартовый</td><td>300 ₽</td><td>2 000 000</td><td>150 ₽</td></tr>
-      <tr><td>Выгодный</td><td>600 ₽</td><td>4 200 000</td><td>143 ₽</td></tr>
-      <tr><td>Популярный</td><td>1 200 ₽</td><td>8 800 000</td><td>136 ₽</td></tr>
-      <tr><td>Большой</td><td>2 500 ₽</td><td>18 700 000</td><td>134 ₽</td></tr>
-      <tr><td>Мастерский</td><td>5 000 ₽</td><td>38 000 000</td><td>132 ₽</td></tr>
+      <tr><td>Бесплатный</td><td>0 ₽</td><td>1 млн</td><td>Бонус за согласие</td></tr>
+      <tr><td>Стартовый</td><td>300 ₽</td><td>2 млн</td><td>150 ₽</td></tr>
+      <tr><td>Выгодный</td><td>600 ₽</td><td>4,2 млн</td><td>143 ₽</td></tr>
+      <tr><td>Популярный</td><td>1 200 ₽</td><td>8,8 млн</td><td>136 ₽</td></tr>
+      <tr><td>Большой</td><td>2 500 ₽</td><td>18,7 млн</td><td>134 ₽</td></tr>
+      <tr><td>Мастерский</td><td>5 000 ₽</td><td>38 млн</td><td>132 ₽</td></tr>
     </table>
     <p class="sub" style="margin-top:14px"><b>Оплата и получение.</b> Оплата проходит прямо на сайте,
       через защищённый платёжный сервис <b>ЮKassa</b> (банковская карта, СБП и другие способы).
