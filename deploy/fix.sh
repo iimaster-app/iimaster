@@ -3,7 +3,7 @@
 # Запуск в веб-консоли сервера:  cd / && curl -fsSL <url>/fix.sh | bash
 set -e
 cd /
-ZIP="https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v70.zip"
+ZIP="https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v71.zip"
 RAW="https://raw.githubusercontent.com/iimaster-app/iimaster/main"
 echo '=== 1/4 Скачиваю архив приложения ==='
 curl -fsSL -o /tmp/app.zip "$ZIP"
@@ -12,6 +12,14 @@ rm -rf /opt/ii-master/app
 mkdir -p /opt/ii-master/app
 cd /opt/ii-master/app
 unzip -oq /tmp/app.zip
+# Страховка (грабля 09.10.2026): если архив собран с обратными слэшами, unzip создаёт
+# файлы вида "tools\cloud\server.js" и дерево папок не появляется — говорим об этом прямо.
+if [ ! -f tools/cloud/server.js ]; then
+  echo 'ОШИБКА: архив распаковался неверно (в путях обратные слэши).'
+  echo 'Что появилось в папке:'
+  ls -1 | head -6
+  exit 1
+fi
 ls tools/cloud/server.js >/dev/null
 ls site/index.html >/dev/null
 ls src/index.html >/dev/null
