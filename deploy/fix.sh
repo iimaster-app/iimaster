@@ -3,7 +3,7 @@
 # Запуск в веб-консоли сервера:  cd / && curl -fsSL <url>/fix.sh | bash
 set -e
 cd /
-ZIP="https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v83.zip"
+ZIP="https://raw.githubusercontent.com/iimaster-app/iimaster/main/deploy/ii-master-cloud-v84.zip"
 RAW="https://raw.githubusercontent.com/iimaster-app/iimaster/main"
 echo '=== 1/4 Скачиваю архив приложения ==='
 curl -fsSL -o /tmp/app.zip "$ZIP"
