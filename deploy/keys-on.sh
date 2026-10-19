@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # keys-on.sh — вставить ключи сервисов ОДНИМ разом. Ключи вводятся на сервере (в командной строке
-# их не видно), файл читает только root. В чат и в историю ничего не попадает.
+# их не видно), файл читает только root. В чат и в переписку ничего не попадает.
 # Запуск в веб-консоли сервера (от root):
 #   cd / && curl -fsSL <url>/keys-on.sh | bash
-# Enter на любом шаге = пропустить (старое значение остаётся).
+# Enter на любом шаге = оставить текущее значение.
 set -e
 
 ENVFILE=/opt/ii-master/model.env
+LIMFILE=/opt/ii-master/limit.env
 UNIT=/etc/systemd/system/ii-master.service
 
 echo '=== Ключи ИИ Мастер (вводятся только на сервере) ==='
 [ "$(id -u)" = "0" ] || { echo 'Нужно запускать от root (в веб-консоли вы и так root).'; exit 1; }
 [ -d /opt/ii-master/app ] || { echo 'Нет /opt/ii-master/app — сначала обновите облако (fix.sh).'; exit 1; }
 
-# 1. Служба должна читать model.env
 if [ -f "$UNIT" ]; then
   if ! grep -q 'model.env' "$UNIT"; then
     sed -i '/^ExecStart=/i EnvironmentFile=-/opt/ii-master/model.env' "$UNIT"
@@ -26,61 +26,92 @@ else
   echo 'ВНИМАНИЕ: нет systemd-службы ii-master — проверьте запуск сервера вручную.'
 fi
 
-# 2. Текущие значения (если файл уже есть)
-CUR_KEY=''; CUR_MODEL='glm-4.5-flash'; CUR_VISION='glm-4.6v-flash'; CUR_RUB='1.5'; CUR_LIMIT='100'
+# --- текущие значения ---
+CUR_KEY=''
+CUR_GPT=''
+CUR_MODEL='glm-4.5-flash'
+CUR_VISION='glm-4.6v-flash'
+CUR_RUB='1.5'
+CUR_LIMIT='100'
+CUR_SMART='3'
 if [ -f "$ENVFILE" ]; then
-  CUR_KEY="$((grep -E '^CLOUD_MODEL_KEY=' "$ENVFILE" || true) | cut -d= -f2-)"
-  CUR_MODEL="$((grep -E '^CLOUD_MODEL=' "$ENVFILE" || true) | cut -d= -f2-)"
-  CUR_VISION="$((grep -E '^CLOUD_MODEL_VISION=' "$ENVFILE" || true) | cut -d= -f2-)"
-  CUR_RUB="$((grep -E '^CLOUD_ASSIST_RUB=' "$ENVFILE" || true) | cut -d= -f2-)"
+  CUR_KEY="$(grep -E '^CLOUD_MODEL_KEY=' "$ENVFILE" | cut -d= -f2- || true)"
+  CUR_GPT="$(grep -E '^CLOUD_GPT_KEY=' "$ENVFILE" | cut -d= -f2- || true)"
+  CUR_MODEL="$(grep -E '^CLOUD_MODEL=' "$ENVFILE" | cut -d= -f2- || true)"
+  CUR_VISION="$(grep -E '^CLOUD_MODEL_VISION=' "$ENVFILE" | cut -d= -f2- || true)"
+  CUR_RUB="$(grep -E '^CLOUD_ASSIST_RUB=' "$ENVFILE" | cut -d= -f2- || true)"
+  CUR_SMART="$(grep -E '^CLOUD_SMART_RUB=' "$ENVFILE" | cut -d= -f2- || true)"
 fi
 [ -n "$CUR_MODEL" ] || CUR_MODEL='glm-4.5-flash'
 [ -n "$CUR_VISION" ] || CUR_VISION='glm-4.6v-flash'
 [ -n "$CUR_RUB" ] || CUR_RUB='1.5'
+[ -n "$CUR_SMART" ] || CUR_SMART='3'
+if [ -f "$LIMFILE" ]; then
+  CUR_LIMIT="$(grep -E '^CLOUD_LIMIT_RUB=' "$LIMFILE" | cut -d= -f2- || true)"
+fi
+[ -n "$CUR_LIMIT" ] || CUR_LIMIT='100'
 
 echo ''
-echo 'Шаг 1. Ключ z.ai (текст и разбор картинок — общий доступ).'
+echo 'Шаг 1. Ключ z.ai — текстовые ответы и разбор картинок (общий доступ).'
 if [ -n "$CUR_KEY" ]; then
-  echo "  сейчас ключ уже задан (…${CUR_KEY: -4}). Enter — оставить его."
+  echo "  сейчас задан (…${CUR_KEY: -4}). Enter — оставить."
 else
-  echo '  сейчас ключ не задан.'
+  echo '  сейчас не задан.'
 fi
-read -r -s -p '  Ключ z.ai (Enter — оставить/пропустить): ' KEY < /dev/tty
+read -r -s -p '  Ключ z.ai (Enter — оставить): ' KEY < /dev/tty
 echo ''
 KEY="$(printf '%s' "$KEY" | tr -d '[:space:]')"
 [ -n "$KEY" ] || KEY="$CUR_KEY"
 
 echo ''
-echo 'Шаг 2. Модели (Enter — как сейчас).'
+echo 'Шаг 2. Ключ GPTunnel — картинки, видео, музыка и умный режим ДЛЯ ВСЕХ (нашим ключом).'
+if [ -n "$CUR_GPT" ]; then
+  echo "  сейчас задан (…${CUR_GPT: -4}). Enter — оставить."
+else
+  echo '  сейчас не задан: генерация будет только со своими ключами у пользователя.'
+fi
+read -r -s -p '  Ключ GPTunnel (Enter — оставить): ' GPTKEY < /dev/tty
+echo ''
+GPTKEY="$(printf '%s' "$GPTKEY" | tr -d '[:space:]')"
+[ -n "$GPTKEY" ] || GPTKEY="$CUR_GPT"
+
+echo ''
+echo 'Шаг 3. Модели (Enter — как сейчас).'
 read -r -p "  Модель для ответов [$CUR_MODEL]: " MODEL < /dev/tty
 [ -n "$MODEL" ] || MODEL="$CUR_MODEL"
 read -r -p "  Модель для картинок/зрения [$CUR_VISION]: " VISION < /dev/tty
 [ -n "$VISION" ] || VISION="$CUR_VISION"
 
 echo ''
-echo 'Шаг 3. Цена ответа и дневной лимит (Enter — как сейчас).'
+echo 'Шаг 4. Цены и лимит (Enter — как сейчас).'
 read -r -p "  Рублей за ответ [$CUR_RUB]: " RUB < /dev/tty
 [ -n "$RUB" ] || RUB="$CUR_RUB"
+read -r -p "  Рублей за «умный» ответ [$CUR_SMART]: " SMART < /dev/tty
+[ -n "$SMART" ] || SMART="$CUR_SMART"
 read -r -p "  Дневной лимит на пользователя, ₽ [$CUR_LIMIT]: " LIMIT < /dev/tty
 [ -n "$LIMIT" ] || LIMIT="$CUR_LIMIT"
 
 if [ -z "$KEY" ]; then
-  echo 'Ключ z.ai не задан — общий доступ работать не будет. Отменяю.'
+  echo 'Ключ z.ai пуст — текстовые ответы работать не будут. Отменяю.'
   exit 1
 fi
 
 umask 077
-printf '%s\n' \
-  "CLOUD_MODEL_KEY=$KEY" \
-  "CLOUD_MODEL=$MODEL" \
-  "CLOUD_MODEL_VISION=$VISION" \
-  "CLOUD_MODEL_BASE=${CLOUD_MODEL_BASE:-https://api.z.ai/api/paas/v4}" \
-  "CLOUD_ASSIST_RUB=$RUB" > "$ENVFILE"
+{
+  printf '%s\n' "CLOUD_MODEL_KEY=$KEY"
+  if [ -n "$GPTKEY" ]; then printf '%s\n' "CLOUD_GPT_KEY=$GPTKEY"; fi
+  printf '%s\n' \
+    "CLOUD_MODEL=$MODEL" \
+    "CLOUD_MODEL_VISION=$VISION" \
+    "CLOUD_MODEL_BASE=${CLOUD_MODEL_BASE:-https://api.z.ai/api/paas/v4}" \
+    "CLOUD_ASSIST_RUB=$RUB" \
+    "CLOUD_SMART_RUB=$SMART"
+} > "$ENVFILE"
 chmod 600 "$ENVFILE"
-printf '%s\n' "CLOUD_LIMIT_RUB=$LIMIT" > /opt/ii-master/limit.env
-chmod 600 /opt/ii-master/limit.env
+printf '%s\n' "CLOUD_LIMIT_RUB=$LIMIT" > "$LIMFILE"
+chmod 600 "$LIMFILE"
 echo ''
-echo "сохранено: $ENVFILE и /opt/ii-master/limit.env (ключ скрыт, читает только root)"
+echo "сохранено: $ENVFILE и $LIMFILE (ключи скрыты, читает только root)"
 
 systemctl restart ii-master
 sleep 3
@@ -89,4 +120,4 @@ curl -s http://127.0.0.1:8790/api/health || true
 echo ''
 curl -s http://127.0.0.1:8790/api/assistant || true
 echo ''
-echo 'Если "on":true — всё работает: пользователям ключи не нужны.'
+echo 'Если в ответе "on":true и "gpt":true — всё работает: пользователям ключи не нужны.'
