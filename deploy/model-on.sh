@@ -41,6 +41,7 @@ RUB="${CLOUD_ASSIST_RUB:-1.5}"                 # сколько рублей с�
 umask 077
 printf '%s\n' \
   "CLOUD_MODEL_KEY=$KEY" \
+  "OWNER_ZAI_KEY=$KEY" \
   "CLOUD_MODEL=$MODEL" \
   "CLOUD_MODEL_VISION=$VISION" \
   "CLOUD_MODEL_BASE=${CLOUD_MODEL_BASE:-https://api.z.ai/api/paas/v4}" \
