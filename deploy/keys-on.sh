@@ -40,6 +40,8 @@ if [ -f "$ENVFILE" ]; then
   CUR_GPT="$(grep -E '^CLOUD_GPT_KEY=' "$ENVFILE" | cut -d= -f2- || true)"
   CUR_YA="$(grep -E '^CLOUD_YANDEX_TTS_KEY=' "$ENVFILE" | cut -d= -f2- || true)"
   CUR_YAF="$(grep -E '^CLOUD_YANDEX_FOLDER=' "$ENVFILE" | cut -d= -f2- || true)"
+  # OWNER_ZAI_KEY — ключ для пути через /proxy (его пишет model-on.sh). Сохраняем: файл перезаписывается целиком.
+  CUR_OWNER="$(grep -E '^OWNER_ZAI_KEY=' "$ENVFILE" | cut -d= -f2- || true)"
   CUR_MODEL="$(grep -E '^CLOUD_MODEL=' "$ENVFILE" | cut -d= -f2- || true)"
   CUR_VISION="$(grep -E '^CLOUD_MODEL_VISION=' "$ENVFILE" | cut -d= -f2- || true)"
   CUR_RUB="$(grep -E '^CLOUD_ASSIST_RUB=' "$ENVFILE" | cut -d= -f2- || true)"
@@ -104,6 +106,7 @@ fi
 umask 077
 {
   printf '%s\n' "CLOUD_MODEL_KEY=$KEY"
+  if [ -n "$CUR_OWNER" ]; then printf '%s\n' "OWNER_ZAI_KEY=$CUR_OWNER"; fi
   if [ -n "$GPTKEY" ]; then printf '%s\n' "CLOUD_GPT_KEY=$GPTKEY"; fi
   if [ -n "$YAKEY" ]; then
     printf '%s\n' "CLOUD_YANDEX_TTS_KEY=$YAKEY"
